@@ -1,0 +1,26 @@
+from enum import Enum
+
+
+class ActivityStatus(Enum):
+    ACTIVE = 'ACTIVE'
+    SUSPENDED = 'SUSPENDED'
+
+
+class ClerkType(Enum):
+    DEBIT = 'DEBIT'
+    CREDIT = 'CREDIT'
+
+
+class TransactionType(Enum):
+    WITHDRAWAL = 'WITHDRAWAL'
+    PURCHASE = 'PURCHASE'
+    WITHDRAWAL_REVERSAL = 'WITHDRAWAL_REVERSAL'
+    PURCHASE_REFUND = 'PURCHASE_REFUND'
+
+
+class TransactionStatus(Enum):
+    PENDING = 'PENDING'
+    SUCCESSFUL = 'SUCCESSFUL'
+    FAILED = 'FAILED'
+    PROCESSING = 'PROCESSING'
+    PROVIDER_PROCESSING = 'PROVIDER_PROCESSING'
