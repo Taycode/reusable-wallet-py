@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, String, Float, ForeignKey, Index, Enum as SQLEnum
+from sqlalchemy import create_engine, Column, String, Float, ForeignKey, DateTime, Enum as SQLEnum, func
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.dialects.postgresql import UUID
 import uuid
@@ -11,7 +11,7 @@ class Ledger(Base):
     __tablename__ = 'ledgers'
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    asset = Column(String, ForeignKey('assets.name'), nullable=False, index=True)
+    asset = Column(String, ForeignKey('assets.id'), nullable=False, index=True)
     clerk_type = Column(SQLEnum(ClerkType), nullable=False)
     entry_type = Column(SQLEnum(TransactionType), nullable=False)
     transaction = Column(String, ForeignKey('transactions.id'), nullable=False, index=True)
@@ -19,6 +19,9 @@ class Ledger(Base):
     pending_delta = Column(Float, nullable=False, default=0)
     available_balance = Column(Float, nullable=False, default=0)
     available_delta = Column(Float, nullable=False, default=0)
+
+    # Additional fields for timestamps
+    created_at = Column(DateTime, default=func.now())
 
     # Define relationships (if other tables 'assets' and 'transactions' exist)
     asset_details = relationship("Asset", back_populates="ledgers")
