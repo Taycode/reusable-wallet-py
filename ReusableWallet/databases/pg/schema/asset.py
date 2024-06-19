@@ -13,7 +13,7 @@ class Asset(Base):
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     symbol = Column(String, nullable=False)
-    user = Column(String, ForeignKey('users.id'), nullable=False)  # Assuming there is a 'users' table
+    user = Column(String, nullable=False)  # Assuming there is a 'users' table
     withdrawal_activity = Column(String, SQLEnum(ActivityStatus), default=ActivityStatus.ACTIVE)
 
     # Setting up a unique constraint on user and symbol

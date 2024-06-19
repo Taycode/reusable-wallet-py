@@ -11,10 +11,10 @@ class Ledger(Base):
     __tablename__ = 'ledgers'
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    asset = Column(String, ForeignKey('assets.id'), nullable=False, index=True)
+    asset = Column(UUID(as_uuid=True), ForeignKey('assets.id'), nullable=False, index=True)
     clerk_type = Column(SQLEnum(ClerkType), nullable=False)
     entry_type = Column(SQLEnum(TransactionType), nullable=False)
-    transaction = Column(String, ForeignKey('transactions.id'), nullable=False, index=True)
+    transaction = Column(UUID(as_uuid=True), ForeignKey('transactions.id'), nullable=False, index=True)
     pending_balance = Column(Float, nullable=False, default=0)
     pending_delta = Column(Float, nullable=False, default=0)
     available_balance = Column(Float, nullable=False, default=0)

@@ -11,7 +11,7 @@ from ReusableWallet.databases.pg.managers.transaction import TransactionManager
 from ReusableWallet.databases.pg.managers.ledger import LedgerManager
 
 
-class PgWallet(ABC):
+class PgWallet:
     _db_initialized = False  # Class variable to ensure DB setup happens only once
 
     def __init__(self, uri: str):
