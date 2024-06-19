@@ -37,3 +37,13 @@ class TransactionManager:
             session.commit()
             session.close()
         return fetched_transaction
+
+    @staticmethod
+    def fetch_transaction_by_id(transaction_id: str, session: Session = None) -> Transaction:
+        close_session = session is None
+        session = session or Session()
+        fetched_transaction = session.query(Transaction).filter(Transaction.id == transaction_id).first()
+        if close_session:
+            session.commit()
+            session.close()
+        return fetched_transaction

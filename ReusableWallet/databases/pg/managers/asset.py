@@ -51,3 +51,26 @@ class AssetManager:
             session.commit()
             session.close()
         return fetched_asset
+
+    @staticmethod
+    def fetch_asset_by_id(asset_id: str, session: Session = None) -> Asset:
+        """Fetch a user asset by id.
+
+        If a session is provided, it will use the session to fetch the asset.
+        If no session is provided, it will create a session, fetch the asset,
+        and close the session.
+
+        Parameters:
+        asset_id (str): The asset identifier.
+        session (Session, optional): An SQLAlchemy Session object.
+
+        Returns:
+        Asset: The fetched Asset object.
+        """
+        close_session = session is None
+        session = session or Session()
+        fetched_asset = session.query(Asset).filter(Asset.id == asset_id).first()
+        if close_session:
+            session.commit()
+            session.close()
+        return fetched_asset

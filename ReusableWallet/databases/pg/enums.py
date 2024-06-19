@@ -16,6 +16,7 @@ class TransactionType(Enum):
     PURCHASE = 'PURCHASE'
     WITHDRAWAL_REVERSAL = 'WITHDRAWAL_REVERSAL'
     PURCHASE_REFUND = 'PURCHASE_REFUND'
+    WALLET_FUND = 'WALLET_FUND'
 
 
 class TransactionStatus(Enum):
