@@ -1,3 +1,5 @@
+from typing import List
+
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
 
@@ -19,3 +21,10 @@ class LedgerManager:
                           .order_by(desc(Ledger.created_at))
                           .first())
         return fetched_ledger
+
+    @staticmethod
+    def fetch_ledger(asset_id: str, session: Session) -> List[Ledger]:
+        fetched_ledgers = (session.query(Ledger)
+                           .filter(Ledger.asset_id == asset_id)
+                           .order_by(desc(Ledger.created_at)).all())
+        return fetched_ledgers

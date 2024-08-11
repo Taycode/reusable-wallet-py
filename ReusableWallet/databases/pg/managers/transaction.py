@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from ReusableWallet.databases.pg.dto.transaction import CreateTransactionDTO
 from ReusableWallet.databases.pg.enums import TransactionStatus
 from ReusableWallet.databases.pg.schema import Transaction
+from sqlalchemy import desc
 
 
 class TransactionManager:
@@ -15,7 +16,11 @@ class TransactionManager:
 
     @staticmethod
     def fetch_transactions(asset_id: str, session: Session):
-        fetched_transactions = session.query(Transaction).filter(Transaction.asset == asset_id).all()
+        fetched_transactions = (session
+                                .query(Transaction)
+                                .filter(Transaction.asset_id == asset_id)
+                                .order_by(desc(Transaction.created_at))
+                                .all())
         return fetched_transactions
 
     @staticmethod

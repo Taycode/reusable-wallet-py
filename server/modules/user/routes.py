@@ -32,6 +32,7 @@ def login_for_access_token(user_credentials: schemas.UserLogin, db: Session = De
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
+
 @router.get("/users/me/", response_model=schemas.User)
 def read_users_me(current_user: models.User = Depends(auth.get_current_user)):
     return current_user

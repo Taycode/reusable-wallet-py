@@ -39,7 +39,7 @@ class AssetManager:
         Returns:
         Asset: The fetched Asset object.
         """
-        fetched_asset = session.query(Asset).filter(Asset.user == user_id).filter(Asset.symbol == symbol).first()
+        fetched_asset = session.query(Asset).filter(Asset.user == str(user_id)).filter(Asset.symbol == symbol).first()
         return fetched_asset
 
     @staticmethod

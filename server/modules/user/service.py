@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
+
+from server.modules.finance.service import create_asset
 from server.modules.user import models, schemas
 
 
@@ -22,6 +24,7 @@ class UserService:
         db.add(db_user)
         db.commit()
         db.refresh(db_user)
+        create_asset(db_user)
         return db_user
 
     @staticmethod

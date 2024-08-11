@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from server.database import Base, engine
 from server.modules.user.routes import router as user_router
+from server.modules.finance.routes import router as finance_router
 from fastapi.openapi.models import OAuthFlows as OAuthFlowsModel, SecurityScheme as SecuritySchemeModel
 from fastapi.openapi.models import OAuthFlowPassword as OAuthFlowPasswordModel
 from fastapi.security import OAuth2PasswordBearer
@@ -14,6 +15,7 @@ Base.metadata.create_all(bind=engine)
 
 
 app.include_router(user_router)
+app.include_router(finance_router)
 
 
 @app.get('/')

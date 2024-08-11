@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Dict, Any, List
 
 from sqlalchemy.orm import Session, sessionmaker
 
@@ -8,6 +8,7 @@ from ReusableWallet.databases.pg.enums import ClerkType, TransactionType, Transa
 from ReusableWallet.databases.pg.managers.asset import AssetManager
 from ReusableWallet.databases.pg.managers.transaction import TransactionManager
 from ReusableWallet.databases.pg.managers.ledger import LedgerManager
+from ReusableWallet.databases.pg.schema import Transaction, Ledger
 
 
 class PgWallet:
@@ -31,9 +32,6 @@ class PgWallet:
         Base.metadata.create_all(engine)
         return engine
 
-    def get_engine_instance(self):
-        return self.engine
-
     def create_asset(self, session: Session, user_id: str, symbol: str):
         asset = self.asset_manager.create_asset(user_id, symbol, session)
         session.commit()
@@ -48,6 +46,12 @@ class PgWallet:
             pending_balance=last_ledger.pending_balance,
             available_balance=last_ledger.available_balance
         )
+
+    def fetch_transactions(self, session: Session, asset_id: str) -> List[Transaction]:
+        return self.transaction_manager.fetch_transactions(asset_id, session)
+
+    def fetch_ledger(self, session: Session, asset_id: str) -> List[Ledger]:
+        return self.ledger_manager.fetch_ledger(asset_id, session)
 
     def initiate_fund_asset(
             self,
